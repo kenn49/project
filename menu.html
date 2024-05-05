@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Menu</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .menu {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    .category {
+      width: 30%;
+      padding: 20px;
+      background-color: #f4f4f4;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .item-list {
+      display: none;
+    }
+
+    .item-list.show {
+      display: block;
+    }
+
+    .item {
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    .item:hover {
+      color: blue;
+    }
+
+    .item-details {
+      margin-top: 50px;
+      text-align: center;
+    }
+
+    .item-details h2 {
+      color: #333;
+    }
+
+    .item-details p {
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div class="menu">
+    <div class="category" id="starters">
+      <h2>Starters</h2>
+      <ul class="item-list" id="starters-list">
+        <li class="item" data-name="Garlic Bread">Garlic Bread</li>
+        <li class="item" data-name="Bruschetta">Bruschetta</li>
+        <li class="item" data-name="Caprese Salad">Caprese Salad</li>
+      </ul>
+    </div>
+    <div class="category" id="main-course">
+      <h2>Main Course</h2>
+      <ul class="item-list" id="main-course-list">
+        <li class="item" data-name="Spaghetti Carbonara">Spaghetti Carbonara</li>
+        <li class="item" data-name="Margherita Pizza">Margherita Pizza</li>
+        <li class="item" data-name="Grilled Salmon">Grilled Salmon</li>
+      </ul>
+    </div>
+    <div class="category" id="desserts">
+      <h2>Desserts</h2>
+      <ul class="item-list" id="desserts-list">
+        <li class="item" data-name="Tiramisu">Tiramisu</li>
+        <li class="item" data-name="Cheesecake">Cheesecake</li>
+        <li class="item" data-name="Chocolate Brownie">Chocolate Brownie</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="item-details">
+    <h2 id="item-name"></h2>
+    <p id="item-description"></p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const categories = document.querySelectorAll('.category');
+
+      categories.forEach(category => {
+        category.addEventListener('click', () => {
+          const itemLists = document.querySelectorAll('.item-list');
+          itemLists.forEach(list => list.classList.remove('show'));
+          const itemList = category.querySelector('.item-list');
+          itemList.classList.add('show');
+        });
+      });
+
+      const items = document.querySelectorAll('.item');
+
+      items.forEach(item => {
+        item.addEventListener('click', () => {
+          const name = item.dataset.name;
+          const description = getItemDescription(name);
+          displayItemDetails(name, description);
+        });
+      });
+
+      function getItemDescription(name) {
+        // Implement your logic here to get the description of the item based on its name.
+        // For demonstration purposes, I'll use predefined data.
+        const descriptions = {
+          'Garlic Bread': 'Toasted bread with garlic, butter, and herbs.',
+          'Bruschetta': 'Toasted bread topped with fresh tomatoes, garlic, basil, and olive oil.',
+          'Caprese Salad': 'Fresh salad made with tomatoes, mozzarella cheese, basil, and olive oil.',
+          'Spaghetti Carbonara': 'Classic Italian pasta dish with eggs, cheese, pancetta, and black pepper.',
+          'Margherita Pizza': 'Traditional Italian pizza with tomato sauce, mozzarella cheese, and fresh basil.',
+          'Grilled Salmon': 'Grilled salmon fillet served with vegetables and lemon butter sauce.',
+          'Tiramisu': 'Classic Italian dessert made with ladyfingers, coffee, mascarpone cheese, and cocoa powder.',
+          'Cheesecake': 'Creamy cheesecake with a graham cracker crust, topped with fruit or chocolate sauce.',
+          'Chocolate Brownie': 'Rich and fudgy chocolate brownie served warm with vanilla ice cream.'
+        };
+
+        return descriptions[name];
+      }
+
+      function displayItemDetails(name, description) {
+        const itemName = document.getElementById('item-name');
+        const itemDescription = document.getElementById('item-description');
+
+        itemName.textContent = name;
+        itemDescription.textContent = description;
+      }
+    });
+  </script>
+</body>
+</html>
